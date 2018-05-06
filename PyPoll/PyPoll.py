@@ -4,6 +4,9 @@ import csv
 path_poll_1 = os.path.join("Resources","election_data_1.csv")
 path_poll_2 = os.path.join("Resources","election_data_2.csv")
 
+file_to_output = os.path.join("Resources","text_file.txt")
+
+
 def final_report (csvpath):
     #Create empty lists 
     votes = []
@@ -65,17 +68,23 @@ def final_report (csvpath):
         win_cand = candidates[win_index]
 
         #Print Results 
-        print("Election Results:")
-        print('------------------------------')
-        print(f'Total Votes:{votes}')
-        print('------------------------------')
-        print(f'{cand_1} : {perc_cand_1}% ({results[0]})')
-        print(f'{cand_2} : {perc_cand_2}%  ({results[1]})')
-        print(f'{cand_3} : {perc_cand_3}% ({results[2]})')
-        print(f'{cand_4} : {perc_cand_4}%  ({results[3]})')
-        print('------------------------------')
-        print(f'Winner: {win_cand}!')
-        print('--------------------------------')
+        election_results = (
+            f"Election Results:'\n"
+            f"------------------------------\n"
+            f'Total Votes:{votes}\n'
+            f'------------------------------\n'
+            f'{cand_1} : {perc_cand_1}% ({results[0]})\n'
+            f'{cand_2} : {perc_cand_2}%  ({results[1]})\n'
+            f'{cand_3} : {perc_cand_3}% ({results[2]})\n'
+            f'{cand_4} : {perc_cand_4}%  ({results[3]})\n'
+            f'------------------------------\n'
+            f'Winner: {win_cand}!\n'
+            f'--------------------------------'
+        )
+        print(election_results)
+        
+        with open(file_to_output,"a") as text_file:
+            text_file.write(election_results)    
 
 final_report(path_poll_1)
 final_report(path_poll_2)
