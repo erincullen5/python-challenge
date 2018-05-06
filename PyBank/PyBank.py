@@ -6,15 +6,17 @@ import csv
 pathCSV_1 = os.path.join("Resources", "budget_data_1.csv")
 pathCSV_2 = os.path.join("Resources", "budget_data_2.csv")
 
-# great_inc_rev = 0
-# great_inc_month = 0
+path_output_1 = os.path.join("Resources","output_data_1.txt")
+path_output_2 = os.path.join("Resources","output_data_2.txt")
 
 #Create function for calculating greatest increase 
 def great_inc(csvread):
-
+    global great_inc_rev
+    global great_inc_month
+    
     great_inc_rev = 0
     great_inc_month = None
-    # import pdb; pdb.set_trace()
+
     for row in csvread: 
         i = int(row[1])
         if great_inc_rev < i: 
@@ -24,6 +26,10 @@ def great_inc(csvread):
     print(f'Greatest Increase in Revenue: {great_inc_month} ,{great_inc_rev}')
 
 def great_dec(csvread):
+    
+    global great_dec_rev
+    global great_dec_month
+    
     great_dec_rev = 0
     great_dec_month = None
     for row in csvread: 
@@ -47,7 +53,7 @@ def run_accounting(csv_path):
 
         # loop through each row
         csvread = list(csvread) # convert to list instead of generator
-        # import pdb; pdb.set_trace()
+
         for row in csvread:  
 
             #add each month to the list month_list 
@@ -78,6 +84,19 @@ def run_accounting(csv_path):
 
         # The greatest decrease in revenue (date and amount) over the entire period
         great_dec(csvread)  
+
+        output = (
+            f"\nFinancial Analysis\n"
+            f"----------------------------\n"
+            f"Total Months: {month}\n"
+            f"Total Revenue: ${total}\n"
+            f"Average Revenue Change: ${average_change}\n"
+            f"Greatest Increase in Revenue: {great_inc_rev} (${great_inc_month})\n"
+            f"Greatest Decrease in Revenue: {great_dec_rev} (${great_dec_month})\n")
+
+
+    with open(path_output_1, "a+") as txt_file:
+        txt_file.write(output)
 
 #Run the program functions twice for each CSV Path 
 run_accounting(pathCSV_1)
